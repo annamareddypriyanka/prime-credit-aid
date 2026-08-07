@@ -15,6 +15,7 @@ import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
 import { Route as ShellNewApplicationRouteImport } from './routes/_shell.new-application'
 import { Route as ShellApplicantsIndexRouteImport } from './routes/_shell.applicants.index'
 import { Route as ShellApplicantsApplicantIdRouteImport } from './routes/_shell.applicants.$applicantId'
+import { Route as ShellResultApplicantIdRouteImport } from './routes/_shell.result.$applicantId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,12 +47,18 @@ const ShellApplicantsApplicantIdRoute =
     path: '/applicants/$applicantId',
     getParentRoute: () => ShellRoute,
   } as any)
+const ShellResultApplicantIdRoute = ShellResultApplicantIdRouteImport.update({
+  id: '/result/$applicantId',
+  path: '/result/$applicantId',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof ShellDashboardRoute
   '/new-application': typeof ShellNewApplicationRoute
   '/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
+  '/result/$applicantId': typeof ShellResultApplicantIdRoute
   '/applicants/': typeof ShellApplicantsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof ShellDashboardRoute
   '/new-application': typeof ShellNewApplicationRoute
   '/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
+  '/result/$applicantId': typeof ShellResultApplicantIdRoute
   '/applicants': typeof ShellApplicantsIndexRoute
 }
 export interface FileRoutesById {
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/_shell/dashboard': typeof ShellDashboardRoute
   '/_shell/new-application': typeof ShellNewApplicationRoute
   '/_shell/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
+  '/_shell/result/$applicantId': typeof ShellResultApplicantIdRoute
   '/_shell/applicants/': typeof ShellApplicantsIndexRoute
 }
 export interface FileRouteTypes {
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/new-application'
     | '/applicants/$applicantId'
+    | '/result/$applicantId'
     | '/applicants/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/new-application'
     | '/applicants/$applicantId'
+    | '/result/$applicantId'
     | '/applicants'
   id:
     | '__root__'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
     | '/_shell/dashboard'
     | '/_shell/new-application'
     | '/_shell/applicants/$applicantId'
+    | '/_shell/result/$applicantId'
     | '/_shell/applicants/'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellApplicantsApplicantIdRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/result/$applicantId': {
+      id: '/_shell/result/$applicantId'
+      path: '/result/$applicantId'
+      fullPath: '/result/$applicantId'
+      preLoaderRoute: typeof ShellResultApplicantIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
@@ -151,6 +170,7 @@ interface ShellRouteChildren {
   ShellDashboardRoute: typeof ShellDashboardRoute
   ShellNewApplicationRoute: typeof ShellNewApplicationRoute
   ShellApplicantsApplicantIdRoute: typeof ShellApplicantsApplicantIdRoute
+  ShellResultApplicantIdRoute: typeof ShellResultApplicantIdRoute
   ShellApplicantsIndexRoute: typeof ShellApplicantsIndexRoute
 }
 
@@ -158,6 +178,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellDashboardRoute: ShellDashboardRoute,
   ShellNewApplicationRoute: ShellNewApplicationRoute,
   ShellApplicantsApplicantIdRoute: ShellApplicantsApplicantIdRoute,
+  ShellResultApplicantIdRoute: ShellResultApplicantIdRoute,
   ShellApplicantsIndexRoute: ShellApplicantsIndexRoute,
 }
 
@@ -170,3 +191,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
