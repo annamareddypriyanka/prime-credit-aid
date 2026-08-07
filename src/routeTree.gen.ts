@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellAnalyticsRouteImport } from './routes/_shell.analytics'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
+import { Route as ShellFraudMonitorRouteImport } from './routes/_shell.fraud-monitor'
 import { Route as ShellNewApplicationRouteImport } from './routes/_shell.new-application'
 import { Route as ShellApplicantsIndexRouteImport } from './routes/_shell.applicants.index'
 import { Route as ShellApplicantsApplicantIdRouteImport } from './routes/_shell.applicants.$applicantId'
@@ -35,6 +36,11 @@ const ShellAnalyticsRoute = ShellAnalyticsRouteImport.update({
 const ShellDashboardRoute = ShellDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellFraudMonitorRoute = ShellFraudMonitorRouteImport.update({
+  id: '/fraud-monitor',
+  path: '/fraud-monitor',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellNewApplicationRoute = ShellNewApplicationRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analytics': typeof ShellAnalyticsRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/fraud-monitor': typeof ShellFraudMonitorRoute
   '/new-application': typeof ShellNewApplicationRoute
   '/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
   '/result/$applicantId': typeof ShellResultApplicantIdRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analytics': typeof ShellAnalyticsRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/fraud-monitor': typeof ShellFraudMonitorRoute
   '/new-application': typeof ShellNewApplicationRoute
   '/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
   '/result/$applicantId': typeof ShellResultApplicantIdRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/analytics': typeof ShellAnalyticsRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/fraud-monitor': typeof ShellFraudMonitorRoute
   '/_shell/new-application': typeof ShellNewApplicationRoute
   '/_shell/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
   '/_shell/result/$applicantId': typeof ShellResultApplicantIdRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/dashboard'
+    | '/fraud-monitor'
     | '/new-application'
     | '/applicants/$applicantId'
     | '/result/$applicantId'
@@ -103,6 +113,7 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/dashboard'
+    | '/fraud-monitor'
     | '/new-application'
     | '/applicants/$applicantId'
     | '/result/$applicantId'
@@ -113,6 +124,7 @@ export interface FileRouteTypes {
     | '/_shell'
     | '/_shell/analytics'
     | '/_shell/dashboard'
+    | '/_shell/fraud-monitor'
     | '/_shell/new-application'
     | '/_shell/applicants/$applicantId'
     | '/_shell/result/$applicantId'
@@ -154,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellDashboardRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/fraud-monitor': {
+      id: '/_shell/fraud-monitor'
+      path: '/fraud-monitor'
+      fullPath: '/fraud-monitor'
+      preLoaderRoute: typeof ShellFraudMonitorRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/new-application': {
       id: '/_shell/new-application'
       path: '/new-application'
@@ -188,6 +207,7 @@ declare module '@tanstack/react-router' {
 interface ShellRouteChildren {
   ShellAnalyticsRoute: typeof ShellAnalyticsRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellFraudMonitorRoute: typeof ShellFraudMonitorRoute
   ShellNewApplicationRoute: typeof ShellNewApplicationRoute
   ShellApplicantsApplicantIdRoute: typeof ShellApplicantsApplicantIdRoute
   ShellResultApplicantIdRoute: typeof ShellResultApplicantIdRoute
@@ -197,6 +217,7 @@ interface ShellRouteChildren {
 const ShellRouteChildren: ShellRouteChildren = {
   ShellAnalyticsRoute: ShellAnalyticsRoute,
   ShellDashboardRoute: ShellDashboardRoute,
+  ShellFraudMonitorRoute: ShellFraudMonitorRoute,
   ShellNewApplicationRoute: ShellNewApplicationRoute,
   ShellApplicantsApplicantIdRoute: ShellApplicantsApplicantIdRoute,
   ShellResultApplicantIdRoute: ShellResultApplicantIdRoute,
