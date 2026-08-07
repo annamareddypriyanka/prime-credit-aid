@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as ShellAiDecisionRouteImport } from './routes/_shell.ai-decision'
+import { Route as ShellAnalyticsRouteImport } from './routes/_shell.analytics'
+import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
+import { Route as ShellFraudMonitorRouteImport } from './routes/_shell.fraud-monitor'
+import { Route as ShellNewApplicationRouteImport } from './routes/_shell.new-application'
+import { Route as ShellSettingsRouteImport } from './routes/_shell.settings'
+import { Route as ShellApplicantsIndexRouteImport } from './routes/_shell.applicants.index'
+import { Route as ShellApplicantsApplicantIdRouteImport } from './routes/_shell.applicants.$applicantId'
+import { Route as ShellResultApplicantIdRouteImport } from './routes/_shell.result.$applicantId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellRoute = ShellRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShellAiDecisionRoute = ShellAiDecisionRouteImport.update({
+  id: '/ai-decision',
+  path: '/ai-decision',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellAnalyticsRoute = ShellAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellDashboardRoute = ShellDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellFraudMonitorRoute = ShellFraudMonitorRouteImport.update({
+  id: '/fraud-monitor',
+  path: '/fraud-monitor',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellNewApplicationRoute = ShellNewApplicationRouteImport.update({
+  id: '/new-application',
+  path: '/new-application',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSettingsRoute = ShellSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellApplicantsIndexRoute = ShellApplicantsIndexRouteImport.update({
+  id: '/applicants/',
+  path: '/applicants/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellApplicantsApplicantIdRoute =
+  ShellApplicantsApplicantIdRouteImport.update({
+    id: '/applicants/$applicantId',
+    path: '/applicants/$applicantId',
+    getParentRoute: () => ShellRoute,
+  } as any)
+const ShellResultApplicantIdRoute = ShellResultApplicantIdRouteImport.update({
+  id: '/result/$applicantId',
+  path: '/result/$applicantId',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-decision': typeof ShellAiDecisionRoute
+  '/analytics': typeof ShellAnalyticsRoute
+  '/dashboard': typeof ShellDashboardRoute
+  '/fraud-monitor': typeof ShellFraudMonitorRoute
+  '/new-application': typeof ShellNewApplicationRoute
+  '/settings': typeof ShellSettingsRoute
+  '/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
+  '/result/$applicantId': typeof ShellResultApplicantIdRoute
+  '/applicants/': typeof ShellApplicantsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-decision': typeof ShellAiDecisionRoute
+  '/analytics': typeof ShellAnalyticsRoute
+  '/dashboard': typeof ShellDashboardRoute
+  '/fraud-monitor': typeof ShellFraudMonitorRoute
+  '/new-application': typeof ShellNewApplicationRoute
+  '/settings': typeof ShellSettingsRoute
+  '/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
+  '/result/$applicantId': typeof ShellResultApplicantIdRoute
+  '/applicants': typeof ShellApplicantsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_shell': typeof ShellRouteWithChildren
+  '/_shell/ai-decision': typeof ShellAiDecisionRoute
+  '/_shell/analytics': typeof ShellAnalyticsRoute
+  '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/fraud-monitor': typeof ShellFraudMonitorRoute
+  '/_shell/new-application': typeof ShellNewApplicationRoute
+  '/_shell/settings': typeof ShellSettingsRoute
+  '/_shell/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
+  '/_shell/result/$applicantId': typeof ShellResultApplicantIdRoute
+  '/_shell/applicants/': typeof ShellApplicantsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/ai-decision'
+    | '/analytics'
+    | '/dashboard'
+    | '/fraud-monitor'
+    | '/new-application'
+    | '/settings'
+    | '/applicants/$applicantId'
+    | '/result/$applicantId'
+    | '/applicants/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/ai-decision'
+    | '/analytics'
+    | '/dashboard'
+    | '/fraud-monitor'
+    | '/new-application'
+    | '/settings'
+    | '/applicants/$applicantId'
+    | '/result/$applicantId'
+    | '/applicants'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/_shell/ai-decision'
+    | '/_shell/analytics'
+    | '/_shell/dashboard'
+    | '/_shell/fraud-monitor'
+    | '/_shell/new-application'
+    | '/_shell/settings'
+    | '/_shell/applicants/$applicantId'
+    | '/_shell/result/$applicantId'
+    | '/_shell/applicants/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShellRoute: typeof ShellRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +169,109 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell': {
+      id: '/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_shell/ai-decision': {
+      id: '/_shell/ai-decision'
+      path: '/ai-decision'
+      fullPath: '/ai-decision'
+      preLoaderRoute: typeof ShellAiDecisionRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/analytics': {
+      id: '/_shell/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof ShellAnalyticsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/dashboard': {
+      id: '/_shell/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ShellDashboardRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/fraud-monitor': {
+      id: '/_shell/fraud-monitor'
+      path: '/fraud-monitor'
+      fullPath: '/fraud-monitor'
+      preLoaderRoute: typeof ShellFraudMonitorRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/new-application': {
+      id: '/_shell/new-application'
+      path: '/new-application'
+      fullPath: '/new-application'
+      preLoaderRoute: typeof ShellNewApplicationRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/settings': {
+      id: '/_shell/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ShellSettingsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/applicants/': {
+      id: '/_shell/applicants/'
+      path: '/applicants'
+      fullPath: '/applicants/'
+      preLoaderRoute: typeof ShellApplicantsIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/applicants/$applicantId': {
+      id: '/_shell/applicants/$applicantId'
+      path: '/applicants/$applicantId'
+      fullPath: '/applicants/$applicantId'
+      preLoaderRoute: typeof ShellApplicantsApplicantIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/result/$applicantId': {
+      id: '/_shell/result/$applicantId'
+      path: '/result/$applicantId'
+      fullPath: '/result/$applicantId'
+      preLoaderRoute: typeof ShellResultApplicantIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
+interface ShellRouteChildren {
+  ShellAiDecisionRoute: typeof ShellAiDecisionRoute
+  ShellAnalyticsRoute: typeof ShellAnalyticsRoute
+  ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellFraudMonitorRoute: typeof ShellFraudMonitorRoute
+  ShellNewApplicationRoute: typeof ShellNewApplicationRoute
+  ShellSettingsRoute: typeof ShellSettingsRoute
+  ShellApplicantsApplicantIdRoute: typeof ShellApplicantsApplicantIdRoute
+  ShellResultApplicantIdRoute: typeof ShellResultApplicantIdRoute
+  ShellApplicantsIndexRoute: typeof ShellApplicantsIndexRoute
+}
+
+const ShellRouteChildren: ShellRouteChildren = {
+  ShellAiDecisionRoute: ShellAiDecisionRoute,
+  ShellAnalyticsRoute: ShellAnalyticsRoute,
+  ShellDashboardRoute: ShellDashboardRoute,
+  ShellFraudMonitorRoute: ShellFraudMonitorRoute,
+  ShellNewApplicationRoute: ShellNewApplicationRoute,
+  ShellSettingsRoute: ShellSettingsRoute,
+  ShellApplicantsApplicantIdRoute: ShellApplicantsApplicantIdRoute,
+  ShellResultApplicantIdRoute: ShellResultApplicantIdRoute,
+  ShellApplicantsIndexRoute: ShellApplicantsIndexRoute,
+}
+
+const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShellRoute: ShellRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
