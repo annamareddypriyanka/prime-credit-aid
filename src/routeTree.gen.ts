@@ -16,6 +16,7 @@ import { Route as ShellAnalyticsRouteImport } from './routes/_shell.analytics'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
 import { Route as ShellFraudMonitorRouteImport } from './routes/_shell.fraud-monitor'
 import { Route as ShellNewApplicationRouteImport } from './routes/_shell.new-application'
+import { Route as ShellSettingsRouteImport } from './routes/_shell.settings'
 import { Route as ShellApplicantsIndexRouteImport } from './routes/_shell.applicants.index'
 import { Route as ShellApplicantsApplicantIdRouteImport } from './routes/_shell.applicants.$applicantId'
 import { Route as ShellResultApplicantIdRouteImport } from './routes/_shell.result.$applicantId'
@@ -54,6 +55,11 @@ const ShellNewApplicationRoute = ShellNewApplicationRouteImport.update({
   path: '/new-application',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellSettingsRoute = ShellSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellApplicantsIndexRoute = ShellApplicantsIndexRouteImport.update({
   id: '/applicants/',
   path: '/applicants/',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof ShellDashboardRoute
   '/fraud-monitor': typeof ShellFraudMonitorRoute
   '/new-application': typeof ShellNewApplicationRoute
+  '/settings': typeof ShellSettingsRoute
   '/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
   '/result/$applicantId': typeof ShellResultApplicantIdRoute
   '/applicants/': typeof ShellApplicantsIndexRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof ShellDashboardRoute
   '/fraud-monitor': typeof ShellFraudMonitorRoute
   '/new-application': typeof ShellNewApplicationRoute
+  '/settings': typeof ShellSettingsRoute
   '/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
   '/result/$applicantId': typeof ShellResultApplicantIdRoute
   '/applicants': typeof ShellApplicantsIndexRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/_shell/dashboard': typeof ShellDashboardRoute
   '/_shell/fraud-monitor': typeof ShellFraudMonitorRoute
   '/_shell/new-application': typeof ShellNewApplicationRoute
+  '/_shell/settings': typeof ShellSettingsRoute
   '/_shell/applicants/$applicantId': typeof ShellApplicantsApplicantIdRoute
   '/_shell/result/$applicantId': typeof ShellResultApplicantIdRoute
   '/_shell/applicants/': typeof ShellApplicantsIndexRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/fraud-monitor'
     | '/new-application'
+    | '/settings'
     | '/applicants/$applicantId'
     | '/result/$applicantId'
     | '/applicants/'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/fraud-monitor'
     | '/new-application'
+    | '/settings'
     | '/applicants/$applicantId'
     | '/result/$applicantId'
     | '/applicants'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/_shell/dashboard'
     | '/_shell/fraud-monitor'
     | '/_shell/new-application'
+    | '/_shell/settings'
     | '/_shell/applicants/$applicantId'
     | '/_shell/result/$applicantId'
     | '/_shell/applicants/'
@@ -199,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellNewApplicationRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/settings': {
+      id: '/_shell/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ShellSettingsRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/applicants/': {
       id: '/_shell/applicants/'
       path: '/applicants'
@@ -229,6 +248,7 @@ interface ShellRouteChildren {
   ShellDashboardRoute: typeof ShellDashboardRoute
   ShellFraudMonitorRoute: typeof ShellFraudMonitorRoute
   ShellNewApplicationRoute: typeof ShellNewApplicationRoute
+  ShellSettingsRoute: typeof ShellSettingsRoute
   ShellApplicantsApplicantIdRoute: typeof ShellApplicantsApplicantIdRoute
   ShellResultApplicantIdRoute: typeof ShellResultApplicantIdRoute
   ShellApplicantsIndexRoute: typeof ShellApplicantsIndexRoute
@@ -240,6 +260,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellDashboardRoute: ShellDashboardRoute,
   ShellFraudMonitorRoute: ShellFraudMonitorRoute,
   ShellNewApplicationRoute: ShellNewApplicationRoute,
+  ShellSettingsRoute: ShellSettingsRoute,
   ShellApplicantsApplicantIdRoute: ShellApplicantsApplicantIdRoute,
   ShellResultApplicantIdRoute: ShellResultApplicantIdRoute,
   ShellApplicantsIndexRoute: ShellApplicantsIndexRoute,
