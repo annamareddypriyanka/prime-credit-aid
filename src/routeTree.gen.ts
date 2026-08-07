@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as ShellAiDecisionRouteImport } from './routes/_shell.ai-decision'
 import { Route as ShellAnalyticsRouteImport } from './routes/_shell.analytics'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
 import { Route as ShellFraudMonitorRouteImport } from './routes/_shell.fraud-monitor'
@@ -27,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const ShellRoute = ShellRouteImport.update({
   id: '/_shell',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ShellAiDecisionRoute = ShellAiDecisionRouteImport.update({
+  id: '/ai-decision',
+  path: '/ai-decision',
+  getParentRoute: () => ShellRoute,
 } as any)
 const ShellAnalyticsRoute = ShellAnalyticsRouteImport.update({
   id: '/analytics',
@@ -67,6 +73,7 @@ const ShellResultApplicantIdRoute = ShellResultApplicantIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-decision': typeof ShellAiDecisionRoute
   '/analytics': typeof ShellAnalyticsRoute
   '/dashboard': typeof ShellDashboardRoute
   '/fraud-monitor': typeof ShellFraudMonitorRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-decision': typeof ShellAiDecisionRoute
   '/analytics': typeof ShellAnalyticsRoute
   '/dashboard': typeof ShellDashboardRoute
   '/fraud-monitor': typeof ShellFraudMonitorRoute
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_shell': typeof ShellRouteWithChildren
+  '/_shell/ai-decision': typeof ShellAiDecisionRoute
   '/_shell/analytics': typeof ShellAnalyticsRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
   '/_shell/fraud-monitor': typeof ShellFraudMonitorRoute
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-decision'
     | '/analytics'
     | '/dashboard'
     | '/fraud-monitor'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-decision'
     | '/analytics'
     | '/dashboard'
     | '/fraud-monitor'
@@ -122,6 +133,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_shell'
+    | '/_shell/ai-decision'
     | '/_shell/analytics'
     | '/_shell/dashboard'
     | '/_shell/fraud-monitor'
@@ -151,6 +163,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof ShellRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_shell/ai-decision': {
+      id: '/_shell/ai-decision'
+      path: '/ai-decision'
+      fullPath: '/ai-decision'
+      preLoaderRoute: typeof ShellAiDecisionRouteImport
+      parentRoute: typeof ShellRoute
     }
     '/_shell/analytics': {
       id: '/_shell/analytics'
@@ -205,6 +224,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface ShellRouteChildren {
+  ShellAiDecisionRoute: typeof ShellAiDecisionRoute
   ShellAnalyticsRoute: typeof ShellAnalyticsRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
   ShellFraudMonitorRoute: typeof ShellFraudMonitorRoute
@@ -215,6 +235,7 @@ interface ShellRouteChildren {
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
+  ShellAiDecisionRoute: ShellAiDecisionRoute,
   ShellAnalyticsRoute: ShellAnalyticsRoute,
   ShellDashboardRoute: ShellDashboardRoute,
   ShellFraudMonitorRoute: ShellFraudMonitorRoute,
